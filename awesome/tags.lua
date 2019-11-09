@@ -54,6 +54,15 @@ tyrannical.tags = {
         }
     },
     {
+        name = "gaming",
+        init = true,
+        exclusive = true,
+        layout = awful.layout.suit.max,
+        class = {
+            "Steam", "dontstarve_steam",
+        }
+    },
+    {
         name = "doc",
         init = true,
         exclusive = true,
