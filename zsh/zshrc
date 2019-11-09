@@ -123,3 +123,9 @@ function set-wallpaper() {
     echo "$ERROR_PREFIX File does not exists."
   fi
 }
+
+
+##### AUTOCOMPLETE
+COMPLETION_FILE_DIR="$HOME/.dotfiles/zsh/completion"
+fpath=($COMPLETION_FILE_DIR $fpath)
+autoload -U compinit && compinit
