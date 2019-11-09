@@ -59,7 +59,10 @@ commands = {
     brightness_up = "xbacklight -inc 5",
     brightness_down = "xbacklight -dec 5",
     rofi_run = "rofi -matching regex -show run",
-    rofi_window = "rofi -show window"
+    rofi_window = "rofi -show window",
+    volume_up = "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    volume_down = "pactl set-sink-volume @DEFAULT_SINK@ -5%",
+    volume_mute = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 }
 
 -- Default modkey.
@@ -247,6 +250,12 @@ globalkeys = gears.table.join(
               {description = "Rofi run ", group = "launcher"}),
     awful.key({ modkey, },"w", function () awful.spawn(commands.rofi_window) end,
               {description = "Rofi window", group = "launcher"}),
+    awful.key({},"XF86AudioLowerVolume", function () awful.spawn(commands.volume_down) end,
+              {description = "Lower volume", group = "volume"}),
+    awful.key({},"XF86AudioRaiseVolume", function () awful.spawn(commands.volume_up) end,
+              {description = "Raise volume", group = "volume"}),
+    awful.key({},"XF86AudioMute", function () awful.spawn(commands.volume_mute) end,
+              {description = "Mute volume", group = "volume"}),
     -- CUSTOM KEYS/END --
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
