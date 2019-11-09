@@ -69,7 +69,11 @@ tyrannical.tags = {
         no_focus_stealing_out = true,
         layout = awful.layout.suit.floating,
         class = {
-            "libreoffice",
+            "libreoffice", "libreoffice-startcenter",
+            "et", "Et", -- WPS Spreadsheet
+            "wps", "Wps", -- WPS Writer
+            "wpp", "Wpp", -- WPS Presentation
+            "wpspdf", "Wpspdf" -- WPS PDF
         }
     },
     {
