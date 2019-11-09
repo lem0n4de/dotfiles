@@ -102,6 +102,8 @@ source $ZSH/oh-my-zsh.sh
 export VISUAL="code"
 
 ##### Functions
+ERROR_PREFIX="[ERROR]"
+SUCCESS_PREFIX="[SUCCESS]"
 function countdown(){
    date1=$((`date +%s` + $1));
    while [ "$date1" -ge `date +%s` ]; do
@@ -110,4 +112,14 @@ function countdown(){
    done
    notify-send "Ara" "Çok yoruldun haydi ara ver."
    mpv ~/Music/Old-alarm-clock-sound.mp3
+}
+
+function set-wallpaper() {
+  if [[ -e "$1" ]]; then
+    cp "$1" "$HOME/Pictures/wallpapers/wall"
+    feh --bg-scale "$1"
+    echo "$SUCCESS_PREFIX Wallpaper set."
+  else
+    echo "$ERROR_PREFIX File does not exists."
+  fi
 }
