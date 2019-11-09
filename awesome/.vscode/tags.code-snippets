@@ -1,0 +1,36 @@
+{
+	// Place your awesome workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"New tag": {
+		"prefix": "new-tag",
+		"body": [
+			"{",
+			"\tname = \"$1\",",
+			"\tinit = ${2|true,false|},",
+			"\texclusive = ${3|true,false|},",
+			"\tlayout = ${4|awful.layout.suit.floating,awful.layout.suit.tile,awful.layout.suit.tile.left,awful.layout.suit.tile.bottom,awful.layout.suit.tile.top,awful.layout.suit.fair,awful.layout.suit.fair.horizontal,awful.layout.suit.spiral,awful.layout.suit.spiral.dwindle,awful.layout.suit.max,awful.layout.suit.max.fullscreen,awful.layout.suit.magnifier,awful.layout.suit.corner.nw|},",
+			"\tclass = {",
+			"\t\t$5,",
+			"\t}",
+			"},"
+		]
+	},
+	"New client key": {
+		"prefix": ["ckey", "new-ckey"],
+		"body": "awful.key({ ${1:modkey}, $2},\"$3\", function (c) $4 end,\n\t\t  {description = \"$5\", group = \"$6\"}),"
+	}
+}
