@@ -2,6 +2,7 @@
 -- Default awesome theme --
 ---------------------------
 
+local gears = require("gears")
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
@@ -57,6 +58,10 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- notification_[bg|fg]
 -- notification_[width|height|margin]
 -- notification_[border_color|border_width|shape|opacity]
+theme.notification_icon_size = 120
+theme.notification_shape = function(cr, w, h)
+    gears.shape.rounded_rect(cr, w, h, 5)
+end
 
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
