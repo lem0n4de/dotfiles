@@ -40,7 +40,7 @@ tyrannical.tags = {
         no_focus_stealing_out = true,
         layout = awful.layout.suit.max.fullscreen,
         class = {
-            "jetbrains-studio", "code", "Code",
+            "jetbrains-studio", "code", "Code", "emacs", "Emacs"
         }
     },
     {
@@ -50,7 +50,7 @@ tyrannical.tags = {
         no_focus_stealing_out = true,
         layout = awful.layout.suit.max.fullscreen,
         class = {
-            "mpv",
+            "mpv", "spotify", "Spotify"
         }
     },
     {
