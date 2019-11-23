@@ -15,8 +15,8 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-	"New tag": {
-		"prefix": "new-tag",
+	"New tyrannical tag": {
+		"prefix": "ntt",
 		"body": [
 			"{",
 			"\tname = \"$1\",",
@@ -28,6 +28,16 @@
 			"\t}",
 			"},"
 		]
+	},
+	"New tag": {
+		"prefix": "nt",
+		"body": [
+		  "{",
+		  "  rule_any = { class = { $1 } },",
+		  "  properties = { tag = $2 }",
+		  "},"
+		],
+		"description": "New tag"
 	},
 	"New client key": {
 		"prefix": ["ckey", "new-ckey"],
