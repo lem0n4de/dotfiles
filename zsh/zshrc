@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/yorcun/.oh-my-zsh"
@@ -98,6 +98,33 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+##### Google Drive
+LOCAL_SYNC_DIR=/home/yorcun/Documents/drive-synced
+REMOTE_SYNC_DIR="Drive:"
+LOCAL_TODO=$LOCAL_SYNC_DIR/Todo.xlsx
+REMOTE_TODO="$REMOTE_SYNC_DIR/Todo.xlsx"
+LOCAL_S_TABLE=$LOCAL_SYNC_DIR/"Spaced Repetition Çizelge.xlsx"
+REMOTE_S_TABLE="$REMOTE_SYNC_DIR/Spaced Repetition Çizelge.xlsx"
+function push-todo() {
+  rclone sync $LOCAL_TODO $REMOTE_SYNC_DIR
+}
+
+function push-s-table() {
+  rclone sync $LOCAL_S_TABLE $REMOTE_SYNC_DIR
+}
+
+function pull-todo() {
+  rclone sync $REMOTE_TODO $LOCAL_SYNC_DIR
+}
+
+function pull-s-table() {
+  rclone sync $REMOTE_S_TABLE $LOCAL_SYNC_DIR
+}
+
+function pull-kadın-doğum() {
+  rclone sync $LOCAL_SYNC_DIR/Kadın\ Doğum Drive:/Kadın\ Doğum
+}
+
 ##### Visual editor
 export VISUAL="code"
 
@@ -117,7 +144,7 @@ function countdown(){
 function set-wallpaper() {
   if [[ -e "$1" ]]; then
     cp "$1" "$HOME/Pictures/wallpapers/wall"
-    feh --bg-scale "$1"
+    feh --bg-fill "$1"
     echo "$SUCCESS_PREFIX Wallpaper set."
   else
     echo "$ERROR_PREFIX File does not exists."
