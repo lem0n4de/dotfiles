@@ -22,6 +22,7 @@ require("awful.hotkeys_popup.keys")
 -- local tags = require("tags")
 local config = require("config")
 local rules = require("rules")
+local vollib = require("widgets.volume")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -157,6 +158,8 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+local volume = vollib({fg_color = "#1ad271"})
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -175,7 +178,34 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
+        buttons = taglist_buttons,
+        widget_template = {
+            {
+                {
+                    {
+                        id = "icon_role",
+                        widget = wibox.widget.imagebox
+                    },
+                    top = 3,
+                    bottom = 3,
+                    left = 10,
+                    right = 10,
+                    widget = wibox.container.margin,
+                },
+                -- {
+                --     {
+                --         id = "text_role",
+                --         widget = wibox.widget.textbox
+                --     },
+                --     margins = 2,
+                --     right = 10,
+                --     widget = wibox.container.margin
+                -- },
+                layout = wibox.layout.fixed.horizontal
+            },
+            id     = 'background_role',
+            widget = wibox.container.background,
+        },
     }
 
     -- Create a tasklist widget
@@ -199,6 +229,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            volume,
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
@@ -227,11 +258,11 @@ globalkeys = gears.table.join(
               {description = "Rofi run ", group = "launcher"}),
     awful.key({ modkey, },"w", function () awful.spawn(commands.rofi_window) end,
               {description = "Rofi window", group = "launcher"}),
-    awful.key({},"XF86AudioLowerVolume", function () awful.spawn(commands.volume_down) end,
+    awful.key({},"XF86AudioLowerVolume", function () volume:volume_down() end,
               {description = "Lower volume", group = "volume"}),
-    awful.key({},"XF86AudioRaiseVolume", function () awful.spawn(commands.volume_up) end,
+    awful.key({},"XF86AudioRaiseVolume", function () volume:volume_up() end,
               {description = "Raise volume", group = "volume"}),
-    awful.key({},"XF86AudioMute", function () awful.spawn(commands.volume_mute) end,
+    awful.key({},"XF86AudioMute", function () volume:volume_mute() end,
               {description = "Mute volume", group = "volume"}),
     -- CUSTOM KEYS/END --
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,

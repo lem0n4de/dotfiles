@@ -3,6 +3,8 @@ local beautiful = require("beautiful")
 local tags = require("tags")
 local controls = require("controls")
 
+colors = { "#21fc0d", "#fffc00", "#560a86", "#01d28e", "#ffd800", "#9d0b0b", "#f45905" }
+
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
@@ -24,11 +26,17 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
 
-    { rule_any = { class = { "Firefox", "Navigator", "qutebrowser" } },
+    { rule_any = { class = { "Firefox", "Navigator", "qutebrowser","brave-browser", "Brave-browser" } },
       properties = { tag = tag1 } },
     {
       rule_any = { class = { "kitty", "kitty" } },
-      properties = { tag = tag2 }
+      properties = {
+        tag = tag2,
+        border_width = 2,
+        border_color = function()
+          return colors[math.random(#colors)]
+        end
+      }
     },
     {
       rule_any = { class = {
@@ -45,7 +53,7 @@ awful.rules.rules = {
       properties = { tag = tag4 }
     },
     {
-      rule_any = { class = { "mpv", "spotify", "Spotify" } },
+      rule_any = { class = { "mpv" } },
       properties = { tag = tag5 }
     },
     {
@@ -53,7 +61,11 @@ awful.rules.rules = {
       properties = { tag = tag6 }
     },
     {
-      rule_any = { class = { "Steam", "dontstarve_steam", "lutris", "faeria_steam" } },
+      rule_any = { class = { "Steam", "dontstarve_steam", "lutris", "Lutris" , "faeria_steam", "terraria_steam" } },
       properties = { tag = tag7 }
     },
+    {
+      rule_any = { class = { "spotify", "Spotify" } },
+      properties = { tag = tag8 }
+    }
 }

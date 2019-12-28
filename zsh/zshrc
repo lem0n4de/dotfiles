@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH:$HOME/dev/Android/Sdk/platform-tools:$HOME/dev/Android/Sdk/tools/bin:$HOME/.local/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/yorcun/.oh-my-zsh"
@@ -97,6 +97,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cat="bat"
+alias ls="exa"
+alias vi="nvim"
 
 ##### Google Drive
 LOCAL_SYNC_DIR=/home/yorcun/Documents/drive-synced
@@ -156,3 +159,6 @@ function set-wallpaper() {
 COMPLETION_FILE_DIR="$HOME/.dotfiles/zsh/completion"
 fpath=($COMPLETION_FILE_DIR $fpath)
 autoload -U compinit && compinit
+
+##### GENIUS
+export GENIUS_CLIENT_ACCESS_TOKEN="qiJJloKVkr7onXkEh1H1zgfDcVZvRjVzmpPJfvo25c_bV3XDqoPrSY-gjD-7V2_K"
