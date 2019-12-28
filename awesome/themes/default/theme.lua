@@ -17,7 +17,7 @@ theme.colors = {
     neon_purple = "#1ad271"
 }
 
-theme.font          = "Liberation Sans 8"
+theme.font          = "Liberation Sans 9"
 
 theme.bg_normal     = "#222222"
 theme.bg_focus      = "#535d6c"
