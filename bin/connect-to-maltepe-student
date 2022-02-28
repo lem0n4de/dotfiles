@@ -1,0 +1,7 @@
+#!env sh
+systemctl stop NetworkManager
+systemctl stop wpa_supplicant
+killall nm-applet
+wpa_supplicant -i wlan0 -c "$(pwd)/configuration/wifi/Maltepe_Student.conf"
+sleep 2
+systemctl start dhcpcd.service

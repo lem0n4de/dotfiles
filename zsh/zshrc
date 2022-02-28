@@ -1,8 +1,8 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH:$HOME/dev/Android/Sdk/platform-tools:$HOME/dev/Android/Sdk/tools/bin:$HOME/.local/bin
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH:$HOME/dev/Android/Sdk/platform-tools:$HOME/dev/Android/Sdk/tools/bin:$HOME/.local/bin:$HOME/.dotfiles/bin:$HOME/.yarn/bin
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/yorcun/.oh-my-zsh"
+export ZSH="/usr/share/oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -68,7 +68,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git docker themes)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,33 +100,7 @@ source $ZSH/oh-my-zsh.sh
 alias cat="bat"
 alias ls="exa"
 alias vi="nvim"
-
-##### Google Drive
-LOCAL_SYNC_DIR=/home/yorcun/Documents/drive-synced
-REMOTE_SYNC_DIR="Drive:"
-LOCAL_TODO=$LOCAL_SYNC_DIR/Todo.xlsx
-REMOTE_TODO="$REMOTE_SYNC_DIR/Todo.xlsx"
-LOCAL_S_TABLE=$LOCAL_SYNC_DIR/"Spaced Repetition Çizelge.xlsx"
-REMOTE_S_TABLE="$REMOTE_SYNC_DIR/Spaced Repetition Çizelge.xlsx"
-function push-todo() {
-  rclone sync $LOCAL_TODO $REMOTE_SYNC_DIR
-}
-
-function push-s-table() {
-  rclone sync $LOCAL_S_TABLE $REMOTE_SYNC_DIR
-}
-
-function pull-todo() {
-  rclone sync $REMOTE_TODO $LOCAL_SYNC_DIR
-}
-
-function pull-s-table() {
-  rclone sync $REMOTE_S_TABLE $LOCAL_SYNC_DIR
-}
-
-function pull-kadın-doğum() {
-  rclone sync $LOCAL_SYNC_DIR/Kadın\ Doğum Drive:/Kadın\ Doğum
-}
+alias icat="kitty +kitten icat"
 
 ##### Visual editor
 export VISUAL="code"
@@ -154,11 +128,14 @@ function set-wallpaper() {
   fi
 }
 
+function get-window-class() {
+  xprop | grep "WM_CLASS(STRING)"
+}
 
 ##### AUTOCOMPLETE
 COMPLETION_FILE_DIR="$HOME/.dotfiles/zsh/completion"
 fpath=($COMPLETION_FILE_DIR $fpath)
 autoload -U compinit && compinit
+autoload -Uz promptinit
+promptinit
 
-##### GENIUS
-export GENIUS_CLIENT_ACCESS_TOKEN="qiJJloKVkr7onXkEh1H1zgfDcVZvRjVzmpPJfvo25c_bV3XDqoPrSY-gjD-7V2_K"

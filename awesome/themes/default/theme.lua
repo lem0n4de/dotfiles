@@ -36,6 +36,8 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#535d6c"
 theme.border_marked = "#91231c"
 
+theme.top_left_border_color = "#ffffff"
+theme.top_left_border_width = dpi(2)
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -57,6 +59,14 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
+theme.taglist_shape = function(cr, w, h)
+    gears.shape.rounded_bar(cr, w, h)
+end
+
+theme.wibar_shape = function(cr, w, h)
+    gears.shape.rounded_rect(cr, w, h, 50)
+end
+
 
 -- Variables set for theming notifications:
 -- notification_font

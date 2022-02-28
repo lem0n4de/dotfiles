@@ -14,8 +14,8 @@ local function factory(args)
     local VOL_UP = "pactl set-sink-volume @DEFAULT_SINK@ +5%"
     local VOL_DOWN = "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     local VOL_TOGGLE_MUTE = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-    local VOL_GET = "pactl list sinks | grep '^[[:space:]]Volume:' | sed -e 's,.* \\([0-9][0-9]*\\)%.*,\\1,'"
-    local VOL_IS_MUTED = "pactl list sinks | grep '^[[:space:]]Mute:' | cut -d ' ' -f 2"
+    local VOL_GET = "pactl get-sink-volume @DEFAULT_SINK@ | grep '[0-9][0-9]*%' -o | head -1 | tr -d '%'"
+    local VOL_IS_MUTED = "pactl get-sink-mute @DEFAULT_SINK@ | cut -d ' ' -f 2 | grep yes -o -Z"
     
     local widget = wibox.widget {
         {
@@ -39,6 +39,9 @@ local function factory(args)
             widget = wibox.container.margin
         },
         id = "container_widget",
+        left = 5,
+        right = 5,
+        top = 5,
         widget = wibox.layout.fixed.horizontal
     }
 
@@ -60,7 +63,11 @@ local function factory(args)
     function widget:volume_get_and_update()
         awful.spawn.easy_async_with_shell(VOL_GET, function(new_vol)
             awful.spawn.easy_async_with_shell(VOL_IS_MUTED, function(out)
-                is_muted = out == "yes\n"
+                if string.match(out, "yes") then
+			is_muted = true
+		else
+			is_muted = false
+		end
                 widget:update_widget(new_vol, is_muted)
             end)
         end)

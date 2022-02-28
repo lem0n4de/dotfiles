@@ -40,24 +40,26 @@ awful.rules.rules = {
     },
     {
       rule_any = { class = {
-        "libreoffice", "libreoffice-startcenter",
+        "libreoffice", "libreoffice-startcenter", "libreoffice-draw",
         "et", "Et", -- WPS Spreadsheet
         "wps", "Wps", -- WPS Writer
         "wpp", "Wpp", -- WPS Presentation
-        "wpspdf", "Wpspdf" -- WPS PDF
+        "wpspdf", "Wpspdf", -- WPS PDF
+	"calibre-gui", "calibre", "calibre-ebook-viewer",
+	"draw.io"
       } },
       properties = { tag = tag3 }
     },
     {
-      rule_any = { class = { "jetbrains-studio", "code", "Code", "emacs", "Emacs" } },
+      rule_any = { class = { "jetbrains-studio", "code", "Code", "emacs", "Emacs", "jetbrains-rider" } },
       properties = { tag = tag4 }
     },
     {
-      rule_any = { class = { "mpv" } },
+      rule_any = { class = { "mpv", "vlc" } },
       properties = { tag = tag5 }
     },
     {
-      rule_any = { class = { "discord", "telegram-desktop", "TelegramDesktop" } },
+      rule_any = { class = { "discord", "telegram-desktop", "TelegramDesktop", "skype", "Skype" } },
       properties = { tag = tag6 }
     },
     {

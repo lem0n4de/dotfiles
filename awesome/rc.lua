@@ -17,12 +17,14 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
+local dpi   = require("beautiful.xresources").apply_dpi
 
 -- Extensions and personal modules
 -- local tags = require("tags")
 local config = require("config")
 local rules = require("rules")
 local vollib = require("widgets.volume")
+local battery_widget = require("widgets.battery")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -52,7 +54,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.init("/home/yorcun/.config/awesome/themes/default/theme.lua")
+beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/default/theme.lua")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -159,6 +161,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 local volume = vollib({fg_color = "#1ad271"})
+local battery = battery_widget()
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -192,15 +195,15 @@ awful.screen.connect_for_each_screen(function(s)
                     right = 10,
                     widget = wibox.container.margin,
                 },
-                -- {
-                --     {
-                --         id = "text_role",
-                --         widget = wibox.widget.textbox
-                --     },
-                --     margins = 2,
-                --     right = 10,
-                --     widget = wibox.container.margin
-                -- },
+            --    {
+            --        {
+            --            id = "text_role",
+            --            widget = wibox.widget.textbox
+            --        },
+            --        margins = 2,
+            --        right = 10,
+            --        widget = wibox.container.margin
+            --    },
                 layout = wibox.layout.fixed.horizontal
             },
             id     = 'background_role',
@@ -216,9 +219,33 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
-
+    -- s.topleft = wibox({
+    --     x = 00,
+    --     y = 0,
+    --     position = "top",
+    --     width = dpi(400),
+    --     height = dpi(45),
+    --     bg = "transparent",
+    --     visible = true,
+    --     type = "dock",
+    --     border_width = beautiful.top_left_border_width or dpi(5),
+    --     border_color = beautiful.top_left_border_color or "#ffffff",
+    --     screen = s,
+    -- })
+    -- s.topleft:setup {
+    --     layout = wibox.layout.align.horizontal,
+    --     {
+    --         layout = wibox.container.margin,
+    --         top = dpi(10),
+    --         left = dpi(10),
+    --         bottom = dpi(10),
+    --         right = dpi(10),
+    --         s.mytaglist,
+    --     }
+    -- }
+    
     -- Add widgets to the wibox
+    s.mywibox = awful.wibar({ position = "top", screen = s })
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
@@ -229,6 +256,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            battery,
             volume,
             mykeyboardlayout,
             wibox.widget.systray(),
@@ -254,8 +282,8 @@ globalkeys = gears.table.join(
               {description = "Brightness up", group = "display"}),
     awful.key({},"XF86MonBrightnessDown", function() awful.spawn(commands.brightness_down) end,
               {description = "Brightness down", group = "display"}),
-    awful.key({ modkey, },"r", function () awful.spawn(commands.rofi_run) end,
-              {description = "Rofi run ", group = "launcher"}),
+    --- awful.key({ modkey, },"r", function () awful.spawn(commands.rofi_run) end,
+    ---          {description = "Rofi run ", group = "launcher"}),
     awful.key({ modkey, },"w", function () awful.spawn(commands.rofi_window) end,
               {description = "Rofi window", group = "launcher"}),
     awful.key({},"XF86AudioLowerVolume", function () volume:volume_down() end,
@@ -410,6 +438,23 @@ client.connect_signal("manage", function (c)
       and not c.size_hints.program_position then
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
+    end
+
+    if c.class == nil then
+      c.minimized = true
+      c:connect_signal("property::class", function ()
+        c.minimized = false
+        awful.rules.apply(c)
+      end)
+    end
+    if c.class ~= nil and string.match(c.class, "launcher") then
+	local t = awful.screen.focused().selected_tag
+        c:move_to_tag(t)
+    end
+
+    if c.type == "dialog" then
+	local t = awful.screen.focused().selected_tag
+        c:move_to_tag(t)
     end
 end)
 

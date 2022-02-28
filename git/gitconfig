@@ -1,5 +1,6 @@
 [core]
-	editor = vi
+	editor = vim
+	autocrlf = input
 [user]
 	name = Yunus Emre ÖRCÜN
 	email = yunus.emre.orcun@outlook.com
