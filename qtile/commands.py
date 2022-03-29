@@ -27,3 +27,7 @@ def unminimize_last_window_in_group(qtile):
                 break
         if found:
             break
+
+@lazy.function
+def log_some_key_press(qtile):
+    logger.warning("KEY PRESSED")

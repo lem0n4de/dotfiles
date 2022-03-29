@@ -60,23 +60,22 @@ def get_keybindings():
         Key([MOD, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
 
         # Custom commands
-        Key([MOD], "Tab", lazy.layout.next(), desc="Focus next window"),
+        Key([MOD], "Tab", lazy.group.next_window(), desc="Focus next window"),
+        Key([MOD], "f", lazy.window.toggle_floating(), desc="Toggle floating"),
         Key([], "XF86MonBrightnessUp", lazy.spawn(
             "xbacklight -inc 5"), desc="Increase brightness by 5%"),
         Key([], "XF86MonBrightnessDown", lazy.spawn(
             "xbacklight -dec 5"), desc="Decrease brightness by 5%"),
-        Key([MOD], "r", lazy.spawn("sh -c 'PATH=$PATH:$HOME/.local/bin rofi -show run'"), # "ulauncher-toggle"),
+        Key([MOD], "r", lazy.spawn("sh -c 'PATH=$PATH:$HOME/.local/bin:$HOME/.dotfiles/bin rofi -show run'"), # "ulauncher-toggle"),
             desc="Run launcher application"),
         Key([MOD], "w", lazy.spawn("rofi -show window"),
             desc="Show rofi window list"),
-        Key([], "XF86AudioRaiseVolume", lazy.spawn(
-            "pactl set-sink-volume @DEFAULT_SINK@ +5%"), desc="Increase volume by 5%"),
-        Key([], "XF86AudioLowerVolume", lazy.spawn(
-            "pactl set-sink-volume @DEFAULT_SINK@ -5%"), desc="Decrease volume by 5%"),
-        Key([], "XF86AudioMute", lazy.spawn(
-            "pactl set-sink-mute @DEFAULT_SINK@ toggle"), desc="Mute"),
-
-
+        # Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%"), desc="Increase volume by 5%"),
+        # Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"), desc="Decrease volume by 5%"),
+        # Key([], "XF86AudioMute", lazy.spawn(
+        #     "pactl set-sink-mute @DEFAULT_SINK@ toggle"), desc="Mute"),
+        Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause"), desc="Mute"),
+        Key([], "XF86AudioPause", lazy.spawn("playerctl play-pause"), desc="Mute"),
     ]
 
     for i, g in enumerate(get_workspaces_list()):

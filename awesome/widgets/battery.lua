@@ -2,6 +2,8 @@ local wibox = require("wibox")
 local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
+local upower = require "widgets.upower"
+local i = require "inspect"
 
 local function factory(args)
     args = args or {}
@@ -75,7 +77,7 @@ local function factory(args)
     end
 
     function widget:update_widget(percentage, capacity_level, status)
-        print("Percentage: " .. percentage .. " capacity_level: " .. capacity_level .. " status: " .. status)
+        -- print("Percentage: " .. percentage .. " capacity_level: " .. capacity_level .. " status: " .. status)
         local p = tonumber(percentage)
         widget:set_percentage(p)
         if string.match(capacity_level, BATTERY_CAPACITY_FULL) then
@@ -116,28 +118,33 @@ local function factory(args)
             end
         end
     end
-    watch_widget = awful.widget.watch(GET_BATTERY_INFO, 7, function (widget, stdout)
-        local count = 0
-        local percentage = ""
-        local status = ""
-        local capacity_level = ""
-        for line in stdout:gmatch("[^\r\n]+") do
-            print(line)
-            if count == 0 then
-                percentage = line
-                count = count + 1
-            elseif count == 1 then
-                capacity_level = line
-                count = count + 1
-            elseif count == 2 then
-                status = line
-                count = 0
-            end
+
+    upower.on_state_discharging = function()
+        widget:set_percentage(tonumber(upower.device_proxy.Percentage))
+        widget:set_icon(BATTERY_GOOD)
+    end
+
+    upower.on_state_charging = function()
+        widget:set_percentage(upower.device_proxy.Percentage)
+        if upower.device_proxy.Percentage > 80 then
+            widget:set_icon(BATTERY_GOOD_CHARGING)
+        else
+            widget:set_icon(BATTERY_LOW_CHARGING)
         end
-        widget:update_widget(percentage, capacity_level, status)
-        return widget
-    end, widget)
-    return watch_widget
+    end
+
+    upower.on_state_empty = function()
+        widget:set_percentage(upower.device_proxy.Percentage)
+        widget:set_icon(BATTERY_EMPTY)
+    end
+
+    upower.on_state_fully_charged = function()
+        widget:set_percentage(upower.device_proxy.Percentage)
+        widget:set_icon(BATTERY_FULL_CHARGED)
+    end
+    upower:init()
+    upower:run_callbacks()
+    return widget
 end
 
 return factory

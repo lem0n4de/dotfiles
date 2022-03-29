@@ -1,5 +1,14 @@
 {
     "Lua.diagnostics.globals": [
-        "watch_widget"
-    ]
+        "watch_widget",
+        "commands",
+        "awesome",
+        "root",
+        "client",
+        "screen"
+    ],
+    "Lua.diagnostics.disable": [
+        "lowercase-global"
+    ],
+    "python.formatting.provider": "black"
 }

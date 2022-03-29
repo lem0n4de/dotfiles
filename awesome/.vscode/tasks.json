@@ -4,9 +4,30 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
+            "label": "start awmtt",
             "type": "shell",
-            "command": "echo Hello"
+            "command": "awmtt start",
+            "problemMatcher": []
+        },
+        {
+            "label": "restart awmtt",
+            "type": "shell",
+            "command": "awmtt restart",
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "stop awmtt",
+            "type": "shell",
+            "command": "awmtt stop all",
+            "problemMatcher": []
         }
     ]
 }

@@ -2,7 +2,7 @@ import re
 from libqtile.config import Rule, Match
 
 WEB_MATCHES = [Match(wm_class=["Firefox", "Navigator", "qutebrowser", "brave-browser",
-                               "Brave-browser"], role=["browser"]), Match(title=["Brave"])]
+                               "Brave-browser", "brave", "Brave"]), Match(title=["Brave"])]
 
 TERM_MATCHES = [Match(wm_class=["kitty", "kitty"])]
 
@@ -15,7 +15,7 @@ DOC_MATCHES = [Match(wm_class=["libreoffice", "libreoffice-startcenter", "libreo
                                "draw.io"])]
 
 DEV_MATCHES = [Match(wm_class=["jetbrains-studio", "code",
-                     "Code", "emacs", "Emacs", "jetbrains-rider"])]
+                     "Code", "emacs", "Emacs", "jetbrains-rider", "jetbrains-clion"])]
 
 MEDIA_MATCHES = [Match(wm_class=["mpv", "vlc"])]
 GAMING_MATCHES = [Match(wm_class=["Steam", "dontstarve_steam",
@@ -27,4 +27,6 @@ RULES = [
     # dialogs
     Rule(Match(wm_class=["ulauncher", "Ulauncher", re.compile(".*ulauncher.*")]), float=True,
          intrusive=True),
+    Rule(Match(wm_class=["pcmanfm", "Pcmanfm"]), float=True, intrusive=True),
+    Rule(Match(wm_type=["dialog"]), float=True, intrusive=True)
 ]

@@ -1,6 +1,7 @@
 from turtle import color
 from typing import List  # noqa: F401
 import os
+from webbrowser import BackgroundBrowser
 
 from libqtile import bar, layout
 from libqtile.config import Click, Drag, Match, Screen
@@ -11,10 +12,11 @@ from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 from rules import RULES
 from theme import Catpuccin, WheelOfTime
+from volume_widget import VolumeWidget
+from battery_widget import BatteryWidget
 import hooks
 import workspaces
 import keybindings
-
 
 keys = keybindings.get_keybindings()
 groups = workspaces.get_workspaces_list()
@@ -51,6 +53,7 @@ def get_decor(color, border_color = None):
 screens = [
     Screen(
         wallpaper=f"{os.getenv('HOME')}/Pictures/wallpapers/wall",
+        wallpaper_mode="fill",
         top=bar.Bar(
             [
                 widget.Spacer(length=sl),
@@ -86,13 +89,10 @@ screens = [
                 widget.Spacer(length=sl),
                 widget.Systray(),
                 widget.Spacer(length=sl),
-                widget.PulseVolume(
-                    get_volume_command="pactl get-sink-volume @DEFAULT_SINK@ | grep '[0-9][0-9]*%' -o | head -1 | tr -d '%'",
-                    mute_command="pactl set-sink-mute @DEFAULT_SINK@ toggle",
-                    volume_up_command="pactl set-sink-volume @DEFAULT_SINK@ +5%",
-                    volume_down_command="pactl set-sink-volume @DEFAULT_SINK@ -5%",
-                    decorations = get_decor(WheelOfTime.DARK_GREEN, WheelOfTime.GREEN),
-                    padding = 10),
+                VolumeWidget(
+                   configure_keys=keys,
+                   decorations = get_decor(WheelOfTime.DARK_GREEN, WheelOfTime.GREEN),
+                   padding = 10),
                 widget.Spacer(length=sl),
                 widget.Backlight(
                     backlight_name="amdgpu_bl0",
@@ -100,11 +100,16 @@ screens = [
                     decorations = get_decor(WheelOfTime.DARK_YELLOW, WheelOfTime.YELLOW),
                     padding = 10),
                 widget.Spacer(length=sl),
-                widget.Battery(
-                    update_interval=5,
-                    decorations = get_decor(WheelOfTime.DARK_GRAY, WheelOfTime.GRAY),
-                    foreground = WheelOfTime.GRAY,
-                    padding = 10),
+                # widget.Battery(
+                #     update_interval=5,
+                #     decorations = get_decor(WheelOfTime.DARK_GRAY, WheelOfTime.GRAY),
+                #     foreground = WheelOfTime.GRAY,
+                #     padding = 10),
+                widget.Notify(default_timeout=3),
+                BatteryWidget(
+                    decorations=get_decor(WheelOfTime.DARK_GRAY, WheelOfTime.GRAY),
+                    foreground=WheelOfTime.GRAY,
+                    padding=10),
                 widget.Spacer(length=sl),
                 widget.Clock(
                     format='%Y-%m-%d %a %I:%M %p',

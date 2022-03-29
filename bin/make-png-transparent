@@ -1,0 +1,55 @@
+#!/bin/python
+import os
+from pathlib import Path
+from PIL import Image
+try:
+    import pyvips
+except ImportError:
+    print("Please install pyvips and libvips.")
+    os.exit(1)    
+import argparse
+
+def svg_to_png(input_directory: Path, output_directory:Path=None):
+    out_dir = output_directory if output_directory else Path(".")
+    for f in input_directory.iterdir():
+        if f.is_file() and f.suffix == ".svg":
+            print(f"Converting {f.resolve()}")
+            im = pyvips.Image.new_from_file(str(f.name), dpi=90)
+            out = out_dir / f.with_name(f"_{f.name}").with_suffix(".png").name
+            im.write_to_file(str(out.resolve()))
+
+def make_png_great_again(input_directory: Path, output_directory:Path=None):
+    out_dir = output_directory if output_directory else Path(".") 
+    for f in out_dir.iterdir():
+        if f.is_file() and f.suffix == ".png":
+            print(f"Making {f.name} transparent")
+            im = Image.open(str(f.resolve()))
+            im = im.convert("RGBA")
+
+            datas = im.getdata()
+
+            new_data= []
+
+            for item in datas:
+                if item[0] > 245 and item[1] > 245 and item[2] > 245:
+                    new_data.append((255,255,255,0))
+                else:
+                    new_data.append(item)
+            im.putdata(new_data)
+            im.save(str(out_dir / f.name), "PNG")
+    print("Done.")
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--directory", help="Directory containing png files", type=Path, dest="directory")
+parser.add_argument("-o", "--output-directory", help="Directory to output TRANSPARENT png files", type=Path, dest="output_directory")
+args = parser.parse_args()
+
+if args.directory is None:
+    args.directory = Path(".")
+
+if args.output_directory is not None:
+    if not args.output_directory.exists():
+        args.output_directory.mkdir(parents=True)
+
+make_png_great_again(args.directory, args.output_directory)

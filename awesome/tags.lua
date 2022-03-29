@@ -1,6 +1,14 @@
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
+local beautiful = require "beautiful"
+local inspect = require "inspect"
+
+local icons = beautiful.theme_path .. "/icons"
+
+local function colored_icon(icon)
+    return gears.color.recolor_image(icons .. icon, beautiful.taglist_fg_normal)
+end
 
 tag1 = ""
 tag2 = ""
@@ -11,53 +19,73 @@ tag6 = ""
 tag7 = ""
 tag8 = ""
 tag9 = ""
-
-local icons = gears.filesystem.get_configuration_dir() .. "icons/"
 tag1 = awful.tag.add("web", {
     -- icon = "",
     layout = awful.layout.suit.floating,
     screen = awful.screen.focused(),
-    icon = icons .. "firefox-brands.png"
+    -- icon = icons .. "firefox-brands.png"
+    icon = colored_icon("/wheel.png")
 })
 tag2 = awful.tag.add("term", {
     layout = awful.layout.suit.spiral,
     screen = awful.screen.focused(),
     gap = 10,
     gap_single_client = true,
-    icon = icons .. "terminal-solid.png"
+    icon = colored_icon("/hilt.png")
 })
-tag3 = awful.tag.add("doc", {
+tag3 = awful.tag.add("music", {
     layout = awful.layout.suit.floating,
     screen = awful.screen.focused(),
-    icon = icons .. "folder-regular.png"
+    icon = colored_icon("/harp.png")
 })
 tag4 = awful.tag.add("dev", {
     layout = awful.layout.suit.max,
     screen = awful.screen.focused(),
-    icon = icons .. "code-branch-solid.png"
+    icon = colored_icon("/avendesora-2.png")
 })
 tag5 = awful.tag.add("media", {
     layout = awful.layout.suit.max.fullscreen,
     screen = awful.screen.focused(),
-    icon = icons .. "video-solid.png"
+    icon = colored_icon("/trolloc.png")
 })
-tag6 = awful.tag.add("coms", {
+tag6 = awful.tag.add("doc", {
     layout = awful.layout.suit.floating,
     screen = awful.screen.focused(),
-    icon = icons .. "headset-solid.png"
+    icon = colored_icon("/star.png")
 })
 tag7 = awful.tag.add("gaming", {
     layout = awful.layout.suit.max,
     screen = awful.screen.focused(),
-    icon = icons .. "gamepad-solid.png"
+    icon = colored_icon("/telaran.png")
 })
-tag9 = awful.tag.add("music", {
+tag8 = awful.tag.add("coms", {
     layout = awful.layout.suit.floating,
     screen = awful.screen.focused(),
-    icon = icons .. "spotify-brands.png"
+    icon = colored_icon("/valere.png")
 })
-tag8 = awful.tag.add("other", {
+tag9 = awful.tag.add("other", {
     layout = awful.layout.suit.floating,
     screen = awful.screen.focused(),
-    icon = icons .. "life-ring-regular.png"
+    icon = colored_icon("/ravens.png"),
+    persistant = true -- custom filter
 })
+
+-- Awesome doesn't change colors of icons in taglist so we do it manually
+local _tag_list = {tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8}
+for index, _t in ipairs(_tag_list) do
+    _t:connect_signal("property::selected", function(_tag)
+        if _tag.selected then
+            _tag.icon = gears.color.recolor_image(_tag.icon,
+                                                  beautiful.taglist_fg_focus)
+        else
+            if #_tag:clients() > 0 then
+                _tag.icon = gears.color.recolor_image(_tag.icon,
+                                                      beautiful.taglist_fg_occupied)
+            else
+                _tag.icon = gears.color.recolor_image(_tag.icon,
+                                                      beautiful.taglist_fg_normal)
+            end
+        end
+    end)
+end
+

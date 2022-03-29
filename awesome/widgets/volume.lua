@@ -5,7 +5,6 @@ local beautiful = require("beautiful")
 local function factory(args)
     args = args or {}
     local fg_color = args.fg_color or beautiful.fg_color or "#fff"
-    
     local VOL_HIGH = "/usr/share/icons/Arc/status/symbolic/audio-volume-high-symbolic.svg"
     local VOL_MEDIUM = "/usr/share/icons/Arc/status/symbolic/audio-volume-medium-symbolic.svg"
     local VOL_LOW = "/usr/share/icons/Arc/status/symbolic/audio-volume-low-symbolic.svg"
@@ -46,8 +45,11 @@ local function factory(args)
     }
 
     function widget:update_widget(new_vol, is_muted)
-        vol = tonumber(new_vol)
-        icon_widget = widget:get_children_by_id("icon_widget")[1]
+        if new_vol == nil then
+            return
+        end
+        local vol = tonumber(new_vol)
+        local icon_widget = widget:get_children_by_id("icon_widget")[1]
         if is_muted then
             icon_widget.image = gears.color.recolor_image(VOL_MUTED, fg_color)
         elseif vol >= 66 then
