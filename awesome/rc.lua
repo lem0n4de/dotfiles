@@ -62,6 +62,7 @@ local rules = require("rules")
 local vollib = require("widgets.volume")
 local battery_widget = require("widgets.battery")
 local WheelOfTime = require "themes.wot.colors"
+local taglist = require "widgets.taglist"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -174,38 +175,7 @@ awful.screen.connect_for_each_screen(function(s)
             awful.layout.inc(-1)
         end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
-        screen = s,
-        filter = function (t)
-            if t.persistant ~= nil then
-                return #t:clients() > 0 or not t.persistant
-            end
-            return true
-        end,
-        buttons = taglist_buttons,
-        widget_template = {
-            {
-                {
-                    {id = "icon_role", widget = wibox.widget.imagebox},
-                    top = 3,
-                    bottom = 3,
-                    left = 10,
-                    right = 10,
-                    id = "icon_margin_role",
-                    widget = wibox.container.margin
-                },
-                -- {
-                --     {id = "text_role", widget = wibox.widget.textbox},
-                --     margins = 2,
-                --     right = 10,
-                --     widget = wibox.container.margin
-                -- },
-                layout = wibox.layout.fixed.horizontal
-            },
-            id = 'background_role',
-            widget = wibox.container.background
-        }
-    }
+    s.mytaglist = taglist(s)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
@@ -226,14 +196,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             {
-                {
-                    s.mytaglist,
-                    widget = wibox.container.background,
-                    bg = beautiful.taglist_bg,
-                    shape = beautiful.taglist_total_shape,
-                    shape_border_color = beautiful.taglist_total_border_color,
-                    shape_border_width = beautiful.taglist_total_border_width
-                },
+                s.mytaglist,
                 s.mypromptbox,
                 widget = wibox.container.margin,
                 left = 20

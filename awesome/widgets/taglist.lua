@@ -1,6 +1,7 @@
 local awful = require "awful"
 local wibox = require "wibox"
 local gears = require "gears"
+local beautiful = require "beautiful"
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -48,6 +49,17 @@ function factory(screen)
             widget = wibox.container.background
         }
     }
+
+    taglist_container = {
+        mytaglist,
+        widget = wibox.container.background,
+        bg = beautiful.taglist_bg,
+        shape = beautiful.taglist_total_shape,
+        shape_border_color = beautiful.taglist_total_border_color,
+        shape_border_width = beautiful.taglist_total_border_width
+    }
+    
+    return taglist_container
 end
 
 return factory
