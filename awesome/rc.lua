@@ -150,7 +150,7 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
-local volume = vollib({fg_color = "#1ad271"})
+local volume = vollib()
 local battery = battery_widget()
 
 awful.screen.connect_for_each_screen(function(s)

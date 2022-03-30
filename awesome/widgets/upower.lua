@@ -1,6 +1,5 @@
 local inspect = require "inspect"
 local dp = require "dbus_proxy"
-local introspect = require "dbus_proxy"
 
 upower = {
     properties_proxy = nil,

@@ -67,15 +67,23 @@ theme.taglist_squares_not_selected_color = WheelOfTime.WHITE
 
 local taglist_square_size = dpi(8)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-                                taglist_square_size, theme.taglist_bg_focus
-)
+                                taglist_square_size, theme.taglist_bg_focus)
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-                                  taglist_square_size, theme.taglist_squares_not_selected_color)
+                                  taglist_square_size,
+                                  theme.taglist_squares_not_selected_color)
 theme.taglist_shape =
     function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 5) end
 
 theme.wibar_shape =
     function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 50) end
+
+theme.volume_bg_color = WheelOfTime.DARK_GREEN
+theme.volume_bg_shape =
+    function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 10) end
+theme.volume_bg_shape_color = WheelOfTime.GREEN
+theme.volume_bg_shape_width = 2
+
+theme.volume_fg_color = WheelOfTime.GREEN
 
 -- Variables set for theming notifications:
 -- notification_font
