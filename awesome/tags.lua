@@ -71,8 +71,9 @@ tag9 = awful.tag.add("other", {
 })
 
 -- Awesome doesn't change colors of icons in taglist so we do it manually
-local _tag_list = {tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8}
+local _tag_list = {tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9}
 for index, _t in ipairs(_tag_list) do
+---@diagnostic disable-next-line: undefined-field
     _t:connect_signal("property::selected", function(_tag)
         if _tag.selected then
             _tag.icon = gears.color.recolor_image(_tag.icon,

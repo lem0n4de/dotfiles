@@ -10,16 +10,18 @@ upower = {
     on_state_empty = nil,
     on_state_fully_charged = nil,
     on_state_pending_charge = nil,
-    on_state_pending_discharge = nil
+    on_state_pending_discharge = nil,
 }
 
 info = {
-    state = nil
+    state = nil,
 }
 
 local function call_if_not_nil(f, ...)
-    local arg = {...}
-    if type(f) == "function" then f(arg) end
+    local arg = { ... }
+    if type(f) == "function" then
+        f(arg)
+    end
 end
 
 function upower:run_callbacks(state)
@@ -54,29 +56,27 @@ function upower:on_properties_changed_callback()
     return function(property_proxy, appeared)
         if appeared then
             -- proxy.is_connected is true
-            print("proxy connected")
+            print "proxy connected"
             property_proxy:connect_signal(function(p, x, y)
                 assert(p == property_proxy)
                 self:run_callbacks(y.State)
             end, "PropertiesChanged")
-
         else
             -- proxy.is_connected is false
-            print("proxy not connected")
+            print "proxy not connected"
         end
     end
 end
 
 function upower:init_device_proxy()
-    self.device_proxy = dp.Proxy:new({
+    self.device_proxy = dp.Proxy:new {
         bus = dp.Bus.SYSTEM,
         name = "org.freedesktop.UPower",
         interface = "org.freedesktop.UPower.Device",
-        path = "/org/freedesktop/UPower/devices/battery_BAT0"
-    })
+        path = "/org/freedesktop/UPower/devices/battery_BAT0",
+    }
 
-    print("Percentage and state is: ", self.device_proxy.Percentage,
-          self.device_proxy.State)
+    print("Percentage and state is: ", self.device_proxy.Percentage, self.device_proxy.State)
 end
 
 function upower:init_properties_proxy()
@@ -84,7 +84,7 @@ function upower:init_properties_proxy()
         bus = dp.Bus.SYSTEM,
         name = "org.freedesktop.UPower",
         interface = "org.freedesktop.DBus.Properties",
-        path = "/org/freedesktop/UPower/devices/battery_BAT0"
+        path = "/org/freedesktop/UPower/devices/battery_BAT0",
     }, upower:on_properties_changed_callback())
 end
 

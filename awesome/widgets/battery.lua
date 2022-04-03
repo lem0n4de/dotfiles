@@ -1,13 +1,18 @@
-local wibox = require("wibox")
-local awful = require("awful")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local wibox = require "wibox"
+local awful = require "awful"
+local gears = require "gears"
+local beautiful = require "beautiful"
 local upower = require "widgets.upower"
 local i = require "inspect"
+local rounded_rect_container = require "widgets.rounded_rect_container"
 
 local function factory(args)
     args = args or {}
-    local fg_color = args.fg_color or beautiful.fg_color or "#fff"
+    local fg_color = args.fg_color or beautiful.battery_fg_color or beautiful.fg_color or "#fff"
+    local battery_bg_color = args.bg_color or beautiful.battery_bg_color
+    local battery_bg_shape = args.bg_shape or beautiful.battery_bg_shape
+    local battery_bg_shape_border_color = args.bg_shape_color or beautiful.battery_bg_shape_border_color
+    local battery_bg_shape_border_width = args.bg_shape_border_width or beautiful.battery_bg_shape_border_width
 
     local base_arc_location = "/usr/share/icons/Arc/status/symbolic/"
     local GET_BATTERY_PERCENTAGE = "cat /sys/class/power_supply/BAT0/capacity | head -1 | tr -d ' \n'"
@@ -17,7 +22,12 @@ local function factory(args)
     local BATTERY_STATUS_FILE = "/sys/class/power_supply/BAT0/status"
     local BATTERY_PERCENTAGE_FILE = "/sys/class/power_supply/BAT0/capacity"
     local BATTERY_CAPACITY_LEVEL_FILE = "/sys/class/power_supply/BAT0/capacity_level"
-    local GET_BATTERY_INFO = "cat " .. BATTERY_PERCENTAGE_FILE .. " " .. BATTERY_CAPACITY_LEVEL_FILE .. " " .. BATTERY_STATUS_FILE
+    local GET_BATTERY_INFO = "cat "
+        .. BATTERY_PERCENTAGE_FILE
+        .. " "
+        .. BATTERY_CAPACITY_LEVEL_FILE
+        .. " "
+        .. BATTERY_STATUS_FILE
 
     local BATTERY_STATUS_DISCHARGING = "Discharging"
     local BATTERY_STATUS_CHARGING = "Charging"
@@ -30,7 +40,6 @@ local function factory(args)
     local BATTERY_CAPACITY_HIGH = "High"
     local BATTERY_CAPACITY_FULL = "Full"
 
-    
     local BATTERY_FULL_CHARGED = base_arc_location .. "battery-full-charged-symbolic.svg"
     local BATTERY_FULL = base_arc_location .. "battery-full-symbolic.svg"
     local BATTERY_GOOD_CHARGING = base_arc_location .. "battery-good-charging-symbolic.svg"
@@ -47,24 +56,24 @@ local function factory(args)
             {
                 id = "battery_icon_widget",
                 image = BATTERY_EMPTY,
-                widget = wibox.widget.imagebox
+                widget = wibox.widget.imagebox,
             },
             top = 5,
             bottom = 5,
             left = 5,
-            widget = wibox.container.margin
+            widget = wibox.container.margin,
         },
         {
             {
                 id = "battery_text_widget",
-                widget = wibox.widget.textbox
+                widget = wibox.widget.textbox,
             },
             left = 5,
             right = 5,
-            widget = wibox.container.margin
+            widget = wibox.container.margin,
         },
         id = "container_widget",
-        widget = wibox.layout.fixed.horizontal
+        widget = wibox.layout.fixed.horizontal,
     }
 
     function widget:set_icon(icon)
@@ -73,7 +82,9 @@ local function factory(args)
     end
 
     function widget:set_percentage(percentage)
-        widget:get_children_by_id("battery_text_widget")[1]:set_markup(string.format('<span color="' .. fg_color .. '">%d%%</span>', percentage))
+        widget
+            :get_children_by_id("battery_text_widget")[1]
+            :set_markup(string.format('<span color="' .. fg_color .. '">%d%%</span>', percentage))
     end
 
     function widget:update_widget(percentage, capacity_level, status)
@@ -86,14 +97,12 @@ local function factory(args)
             else
                 widget:set_icon(BATTERY_FULL)
             end
-
         elseif string.match(capacity_level, BATTERY_CAPACITY_HIGH) then
             if string.match(status, BATTERY_STATUS_CHARGING) then
                 widget:set_icon(BATTERY_GOOD_CHARGING)
             else
                 widget:set_icon(BATTERY_GOOD)
             end
-
         elseif string.match(capacity_level, BATTERY_CAPACITY_NORMAL) then
             if string.match(status, BATTERY_STATUS_CHARGING) then
                 widget:set_icon(BATTERY_GOOD_CHARGING)
@@ -102,14 +111,12 @@ local function factory(args)
             else
                 widget:set_icon(BATTERY_GOOD)
             end
-
         elseif string.match(capacity_level, BATTERY_CAPACITY_LOW) then
             if string.match(status, BATTERY_STATUS_CHARGING) then
                 widget:set_icon(BATTERY_LOW_CHARGING)
             else
                 widget:set_icon(BATTERY_LOW)
             end
-
         elseif string.match(capacity_level, BATTERY_CAPACITY_CRITICAL) then
             if string.match(status, BATTERY_STATUS_CHARGING) then
                 widget:set_icon(BATTERY_CAUTION_CHARGING)
@@ -144,7 +151,13 @@ local function factory(args)
     end
     upower:init()
     upower:run_callbacks()
-    return widget
+    return rounded_rect_container {
+        widget = widget,
+        bg_color = battery_bg_color,
+        bg_shape = battery_bg_shape,
+        bg_shape_border_color = battery_bg_shape_border_color,
+        bg_shape_border_width = battery_bg_shape_border_width,
+    }
 end
 
 return factory
