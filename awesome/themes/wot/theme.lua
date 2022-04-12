@@ -89,7 +89,7 @@ theme.taglist_fg_focus = WheelOfTime.BLUE
 theme.taglist_fg_normal = WheelOfTime.DARK_BLUE
 theme.taglist_fg_occupied = WheelOfTime.BROWN
 theme.taglist_bg_focus = WheelOfTime.DARK2
-theme.taglist_bg_urgent = WheelOfTime.DARK_WHITE
+theme.taglist_bg_urgent = WheelOfTime.ORANGE
 
 theme.taglist_squares_not_selected_color = WheelOfTime.WHITE
 
