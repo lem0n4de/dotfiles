@@ -7,7 +7,6 @@ local function default_shape(cr, w, h)
     return gears.shape.rounded_rect(cr, w, h, 10)
 end
 
-
 function factory(args)
     local args = args or {}
     widget = wibox.widget.textclock()
@@ -25,7 +24,7 @@ function factory(args)
         bg_color = bg_color,
         bg_shape = bg_shape,
         bg_shape_border_color = bg_shape_border_color,
-        bg_shape_border_width = bg_shape_border_width
+        bg_shape_border_width = bg_shape_border_width,
     }
 
     return container

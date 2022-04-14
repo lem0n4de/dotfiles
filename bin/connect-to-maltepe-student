@@ -1,7 +1,10 @@
 #!/bin/sh
+# GET IDENTITY AND PASSWORD FROM ENV
+source "/home/lem0n/.dotfiles/configuration/wifi/credentials"
 systemctl stop NetworkManager
 systemctl stop wpa_supplicant
 killall nm-applet
-wpa_supplicant -i wlan0 -c "/home/lem0n/.dotfiles/configuration/wifi/Maltepe_Student.conf"
+file="/home/lem0n/.dotfiles/configuration/wifi/Maltepe_Student.conf"
+wpa_supplicant -i wlan0 -c <(sed -e "s/_IDENTITY/$MALTEPE_IDENTITY/" -e "s/_PASSWORD/$MALTEPE_PASSWORD/" $file)
 sleep 2
 systemctl start dhcpcd.service
