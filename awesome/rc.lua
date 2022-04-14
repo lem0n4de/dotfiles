@@ -65,6 +65,7 @@ local volume_widget = require "widgets.volume"
 local battery_widget = require "widgets.battery"
 local taglist = require "widgets.taglist"
 local tasklist = require "widgets.tasklist"
+local textclock = require "widgets.textclock"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -142,7 +143,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = textclock()
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -219,9 +220,9 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             battery,
             volume,
-            wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
+            wibox.widget.systray(),
         },
     }
 end)
@@ -494,7 +495,7 @@ client.connect_signal("manage", function(c)
             c.minimized = false
             awful.rules.apply(c)
             if c.class == "spotify" or c.class == "Spotify" then
-                c:move_to_tag(tag3)
+                c:move_to_tag(tags.tag3)
             end
         end)
     end

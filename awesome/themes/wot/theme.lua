@@ -76,6 +76,7 @@ theme.top_left_border_width = dpi(2)
 
 -- Generate taglist squares:
 
+-- TAGLIST
 local icons = gears.filesystem.get_configuration_dir() .. "icons"
 
 theme.taglist_total_shape = function(cr, width, height, radius)
@@ -103,6 +104,7 @@ theme.taglist_shape = function(cr, w, h)
     gears.shape.rounded_rect(cr, w, h, 5)
 end
 
+-- TASKLIST
 theme.tasklist_bg_and_border_colors = function()
     return tasklist_colors[math.random(#tasklist_colors)]
 end
@@ -111,6 +113,8 @@ theme.wibar_shape = function(cr, w, h)
     gears.shape.rounded_rect(cr, w, h, 50)
 end
 
+
+-- VOLUME
 theme.volume_bg_color = WheelOfTime.DARK_GREEN
 theme.volume_bg_shape = function(cr, w, h)
     gears.shape.rounded_rect(cr, w, h, 10)
@@ -120,6 +124,8 @@ theme.volume_bg_shape_border_width = 2
 
 theme.volume_fg_color = WheelOfTime.GREEN
 
+
+-- BATTERY 
 theme.battery_fg_color = WheelOfTime.GRAY
 theme.battery_bg_color = WheelOfTime.DARK_GRAY
 theme.battery_bg_shape = function(cr, w, h)
@@ -127,6 +133,16 @@ theme.battery_bg_shape = function(cr, w, h)
 end
 theme.battery_bg_shape_border_color = WheelOfTime.GRAY
 theme.battery_bg_shape_border_width = 2
+
+-- TEXTCLOCK
+theme.textclock_fg_color = WheelOfTime.RED
+theme.textclock_bg_color = WheelOfTime.DARK_RED
+theme.textclock_bg_shape = function (cr, w, h)
+    gears.shape.rounded_rect(cr, w, h, 10)
+end
+theme.textclock_bg_shape_border_color = WheelOfTime.RED
+theme.textclock_bg_shape_border_width = 2
+
 
 -- Variables set for theming notifications:
 -- notification_font

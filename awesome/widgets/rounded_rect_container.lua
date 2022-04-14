@@ -7,6 +7,7 @@ local function factory(args)
     if args.widget == nil then
         error "no widget passed"
     end
+    local fg_color = args.fg_color or "#fff"
     local bg_color = args.bg_color or "#000000"
     local bg_shape = args.bg_shape or function(cr, w, h)
         return gears.shape.rounded_rect(cr, w, h, 10)
@@ -18,7 +19,8 @@ local function factory(args)
         {
 
             { layout = wibox.layout.fixed.horizontal, args.widget },
-            bg = bg_color or "#000000",
+            fg = fg_color,
+            bg = bg_color,
             shape = bg_shape,
             shape_border_color = bg_shape_border_color,
             shape_border_width = bg_shape_border_width,
