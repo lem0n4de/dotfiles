@@ -27,6 +27,7 @@ awful.rules.rules = {
             screen = awful.screen.preferred,
             titlebars_enabled = false,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+            tag = tags.tag9
         },
     }, -- Add titlebars to normal clients and dialogs
     {
@@ -39,7 +40,6 @@ awful.rules.rules = {
             floating = true,
         },
     },
-    { rule = {}, properties = { tag = tag9 } },
     {
         rule_any = {
             class = {
@@ -51,12 +51,12 @@ awful.rules.rules = {
                 "Brave-browser",
             },
         },
-        properties = { tag = tag1 },
+        properties = { tag = tags.tag1 },
     },
     {
         rule_any = { class = { "kitty", "kitty" } },
         properties = {
-            tag = tag2,
+            tag = tags.tag2,
             border_width = 2,
             border_color = function()
                 return colors[math.random(#colors)]
@@ -65,7 +65,7 @@ awful.rules.rules = {
     },
     {
         rule_any = { class = { "spotify", "Spotify" } },
-        properties = { tag = tag3 },
+        properties = { tag = tags.tag3 },
     },
     {
         rule_any = {
@@ -84,11 +84,11 @@ awful.rules.rules = {
             },
             instance = { "jetbrains-clion" },
         },
-        properties = { tag = tag4 },
+        properties = { tag = tags.tag4 },
     },
     {
         rule_any = { class = { "mpv", "vlc" } },
-        properties = { tag = tag5 },
+        properties = { tag = tags.tag5 },
     },
     {
         rule_any = {
@@ -113,7 +113,7 @@ awful.rules.rules = {
                 "Anki"
             },
         },
-        properties = { tag = tag6 },
+        properties = { tag = tags.tag6 },
     },
     {
         rule_any = {
@@ -128,7 +128,7 @@ awful.rules.rules = {
                 "r5apex",
             },
         },
-        properties = { tag = tag7 },
+        properties = { tag = tags.tag7 },
     },
     {
         rule_any = {
@@ -140,6 +140,6 @@ awful.rules.rules = {
                 "Skype",
             },
         },
-        properties = { tag = tag8 },
+        properties = { tag = tags.tag8 },
     },
 }
