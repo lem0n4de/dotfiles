@@ -2,7 +2,7 @@ local awful = require "awful"
 local beautiful = require "beautiful"
 local tags = require "tags"
 local controls = require "controls"
-
+local ruled = require "ruled"
 colors = {
     "#21fc0d",
     "#fffc00",
@@ -13,8 +13,7 @@ colors = {
     "#f45905",
 }
 
-awful.rules.rules = {
-    -- All clients will match this rule.
+ruled.client.append_rules {
     {
         rule = {},
         properties = {
@@ -82,7 +81,6 @@ awful.rules.rules = {
                 "qtcreator",
                 "QtCreator",
             },
-            instance = { "jetbrains-clion" },
         },
         properties = { tag = tags.tag4 },
     },
@@ -96,21 +94,17 @@ awful.rules.rules = {
                 "libreoffice",
                 "libreoffice-startcenter",
                 "libreoffice-draw",
-                "et",
-                "Et", -- WPS Spreadsheet
-                "wps",
-                "Wps", -- WPS Writer
-                "wpp",
-                "Wpp", -- WPS Presentation
-                "wpspdf",
-                "Wpspdf", -- WPS PDF
+                "^et$", -- WPS Spreadsheet
+                "^wps$", -- WPS Writer
+                "^wpp$", -- WPS Presentation
+                "pdf", -- WPS PDF
                 "calibre-gui",
                 "calibre",
                 "calibre-ebook-viewer",
                 "draw.io",
                 "Inkscape",
                 "anki",
-                "Anki"
+                "Anki",
             },
         },
         properties = { tag = tags.tag6 },
