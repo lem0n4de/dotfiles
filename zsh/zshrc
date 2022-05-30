@@ -102,7 +102,7 @@ alias cat="bat"
 alias ls="exa"
 alias vi="nvim"
 alias icat="kitty +kitten icat"
-
+eval $(thefuck --alias)
 ##### Visual editor
 export VISUAL="code"
 

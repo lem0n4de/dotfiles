@@ -2,6 +2,7 @@
 terminal = "kitty"
 editor = os.getenv("VISUAL") or os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
+file_explorer = "pcmanfm"
 commands = {
     brightness_up = "xbacklight -inc 5",
     brightness_down = "xbacklight -dec 5",

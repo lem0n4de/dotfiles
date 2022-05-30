@@ -1,5 +1,6 @@
 local wibox = require "wibox"
 local awful = require "awful"
+local naughty = require "naughty"
 local gears = require "gears"
 local beautiful = require "beautiful"
 local upower = require "widgets.upower"
@@ -81,53 +82,31 @@ local function factory(args)
         w.image = gears.color.recolor_image(icon, fg_color)
     end
 
+    widget.last_notified_percentage = 0
+    widget.last_notified_time = os.time()
+
     function widget:set_percentage(percentage)
         widget
             :get_children_by_id("battery_text_widget")[1]
             :set_markup(string.format('<span color="' .. fg_color .. '">%d%%</span>', percentage))
     end
 
-    function widget:update_widget(percentage, capacity_level, status)
-        -- print("Percentage: " .. percentage .. " capacity_level: " .. capacity_level .. " status: " .. status)
-        local p = tonumber(percentage)
-        widget:set_percentage(p)
-        if string.match(capacity_level, BATTERY_CAPACITY_FULL) then
-            if string.match(status, BATTERY_STATUS_FULL) then
-                widget:set_icon(BATTERY_FULL_CHARGED)
-            else
-                widget:set_icon(BATTERY_FULL)
-            end
-        elseif string.match(capacity_level, BATTERY_CAPACITY_HIGH) then
-            if string.match(status, BATTERY_STATUS_CHARGING) then
-                widget:set_icon(BATTERY_GOOD_CHARGING)
-            else
-                widget:set_icon(BATTERY_GOOD)
-            end
-        elseif string.match(capacity_level, BATTERY_CAPACITY_NORMAL) then
-            if string.match(status, BATTERY_STATUS_CHARGING) then
-                widget:set_icon(BATTERY_GOOD_CHARGING)
-            elseif tonumber(percentage) > 90 then
-                widget:set_icon(BATTERY_FULL)
-            else
-                widget:set_icon(BATTERY_GOOD)
-            end
-        elseif string.match(capacity_level, BATTERY_CAPACITY_LOW) then
-            if string.match(status, BATTERY_STATUS_CHARGING) then
-                widget:set_icon(BATTERY_LOW_CHARGING)
-            else
-                widget:set_icon(BATTERY_LOW)
-            end
-        elseif string.match(capacity_level, BATTERY_CAPACITY_CRITICAL) then
-            if string.match(status, BATTERY_STATUS_CHARGING) then
-                widget:set_icon(BATTERY_CAUTION_CHARGING)
-            else
-                widget:set_icon(BATTERY_CAUTION)
-            end
-        end
-    end
-
     upower.on_state_discharging = function()
-        widget:set_percentage(tonumber(upower.device_proxy.Percentage))
+        local percentage = tonumber(upower.device_proxy.Percentage)
+        if percentage ~= widget.last_notified_percentage
+                and os.difftime(os.time(), widget.last_notified_time) > 60
+                and percentage < 15 then
+
+            widget.last_notified_percentage = percentage
+            widget.last_notified_time = os.time()
+            naughty.notify {
+                title = "Battery levels critical",
+                message = "%" .. percentage .. "\nÖLÜYORUUM ACİL PRİZE TAK",
+                urgency = "critical",
+                timeout = 5
+            }
+        end
+        widget:set_percentage(percentage)
         widget:set_icon(BATTERY_GOOD)
     end
 

@@ -32,7 +32,7 @@ ruled.client.append_rules {
     {
         rule_any = {
             type = { "dialog" },
-            class = { "pcmanfm" },
+            class = { "Pcmanfm", "pcmanfm" },
         },
         properties = {
             titlebars_enabled = true,
@@ -120,6 +120,7 @@ ruled.client.append_rules {
                 "terraria_steam",
                 "heroic",
                 "r5apex",
+                "rocketleague.exe"
             },
         },
         properties = { tag = tags.tag7 },

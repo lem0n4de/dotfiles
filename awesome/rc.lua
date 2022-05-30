@@ -117,6 +117,12 @@ mymainmenu = awful.menu {
         },
         { "open terminal", terminal },
         {
+            "open file explorer",
+            function() 
+                awful.spawn(file_explorer)
+            end,
+        },
+        {
             "restart",
             function()
                 awful.spawn "shutdown now -r"
@@ -237,6 +243,9 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join( -- CUSTOM KEYS/START --
+    awful.key({modkey, "Shift" }, "s", function ()
+        awful.spawn.with_shell("scrot -s '" .. os.getenv("HOME") .. "/Pictures/%Y-%m-%d_$wx$h.png' -e 'optipng $f'")
+    end),
     awful.key({}, "XF86MonBrightnessUp", function()
         awful.spawn.with_shell(commands.brightness_up)
     end, {
