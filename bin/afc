@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [[ ("$1" -eq 0) || ("$1" -eq 1) || ("$1" -eq 2) ]]; then
+	echo $1 | sudo tee /sys/devices/platform/asus-nb-wmi/fan_boost_mode /sys/devices/platform/asus-nb-wmi/throttle_thermal_policy;
+else
+	echo "usage: afc NUMBER";
+	echo -e "\nNUMBER: 0 == normal, 1 == turbo, 2 == silent";
+fi

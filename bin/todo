@@ -1,0 +1,111 @@
+#!/usr/bin/env python
+
+import argparse
+import sys
+import json
+from pathlib import Path
+import dataclasses
+from datetime import datetime
+from typing import List
+
+
+class EnhancedJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if dataclasses.is_dataclass(o):
+            return dataclasses.asdict(o)
+        elif isinstance(o, datetime):
+            return o.isoformat()
+        return super().default(o)
+
+
+@dataclasses.dataclass
+class Todo:
+    id: int
+    text: str
+    created_at: datetime
+    done: bool = False
+
+    def __str__(self):
+        return f"{self.text}\nID: {self.id}, Done: {self.done}, Created at: {self.created_at}"
+
+
+def todo_decoder(todo_dict) -> Todo:
+    return Todo(
+        id=todo_dict["id"],
+        text=todo_dict["text"],
+        created_at=datetime.fromisoformat(todo_dict["created_at"]),
+        done=todo_dict["done"],
+    )
+
+
+class JsonHandler:
+    filepath: Path
+
+    def __init__(self, filepath):
+        self.filepath = filepath
+        if not self.filepath.exists():
+            self.filepath.touch(exist_ok=True)
+            self.filepath.write_text(json.dumps([]))
+
+    def read_from_file(self) -> List[Todo]:
+        txt = self.filepath.read_text()
+        return json.loads(txt, object_hook=todo_decoder)
+
+    def write_to_file(self, data: List[Todo]):
+        self.filepath.write_text(json.dumps(data, cls=EnhancedJSONEncoder))
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Todo list")
+
+    parser.add_argument("-t", "--todo", metavar="TODO", type=str)
+    parser.add_argument(
+        "-f",
+        "--file",
+        metavar="FILE",
+        type=Path,
+        default=Path.home() / Path("todo.json"),
+    )
+    parser.add_argument("-d", "--done", metavar="TODO_ID", type=int)
+    parser.add_argument("-r", "--remove", metavar="TODO_ID", type=int)
+
+    args = parser.parse_args()
+
+    try:
+        jh = JsonHandler(args.file)
+        data = jh.read_from_file()
+        if args.todo:
+            highest_id = 0
+            if len(data) > 0:
+                highest_id = max(t.id for t in data)
+            todo = Todo(
+                id=highest_id + 1, text=args.todo, created_at=datetime.now(), done=False
+            )
+            data.append(todo)
+            jh.write_to_file(data)
+            print(todo)
+        elif args.done:
+            todo = [todo for todo in data if todo.id == args.done]
+            if len(todo) == 1:
+                todo[0].done = True
+                jh.write_to_file(data)
+                print(todo[0])
+        elif args.remove:
+            todo = [todo for todo in data if todo.id == args.remove]
+            if len(todo) == 1:
+                data.remove(todo[0])
+                jh.write_to_file(data)
+                print(f"Removed: {todo[0]}")
+            else:
+                print(f"[ERROR] No todo found with id={args.remove}")
+        else:
+            for todo in data:
+                print(f"{todo}\n--------------------")
+    except Exception as e:
+        print(e)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
+    sys.exit(0)

@@ -80,6 +80,7 @@ ruled.client.append_rules {
                 "jetbrains-clion",
                 "qtcreator",
                 "QtCreator",
+                "VSCodium"
             },
         },
         properties = { tag = tags.tag4 },

@@ -1,0 +1,11 @@
+[Unit]
+Description=Auto connection service
+
+[Service]
+ExecStart=/home/lem0n/.dotfiles/bin/auto-connection.sh
+BindsTo=sys-subsystem-net-devices-wlan0.device
+After=sys-subsystem-net-devices-wlan0.device
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target
