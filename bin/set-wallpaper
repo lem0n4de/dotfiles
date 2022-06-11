@@ -1,0 +1,24 @@
+# vim:fileencoding=utf-8:filetype=sh
+#!/usr/bin/env bash
+#
+
+if [[ "$2" ]]; then
+	echo "[ERROR] Pass only wallpaper location";
+	exit 2;
+fi
+
+if [[ -f "$1" ]]; then
+	wname=$(basename "$1");
+	new_path="$DOTFILES/wallpapers/$wname";
+	if [[ ! -e "$new_path" ]]; then
+		cp "$1" "$new_path";
+		echo "Copied $wname to $new_path.";
+	fi
+	ln -sf "$new_path" "$DOTFILES/wallpapers/wall";
+	feh --bg-fill "$DOTFILES/wallpapers/wall";
+	echo "[SUCCESS] Wallpaper set.";
+	exit 0;
+else
+	echo "[ERROR] File does not exist";
+	exit 1;
+fi

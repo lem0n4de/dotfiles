@@ -149,19 +149,36 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 mytextclock = textclock()
 
 local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s)
+    image_file = ""
+    if beautiful.wallpaper and type(beautiful.wallpaper) ~= "function" then
+        image_file = beautiful.wallpaper
+    else
+        image_file = dotfiles .. "/wallpapers/wall"
     end
+
+    gears.wallpaper.maximized(image_file, s)
+    -- Currently does not fit the bg as feh or gears.maximized
+    -- so i use gears instead
+    -- https://github.com/awesomeWM/awesome/issues/3547
+    -- awful.wallpaper {
+    --     screen = s,
+    --     widget = {
+    --         {
+    --             resize = true,
+    --             point = awful.placement.maximized,
+    --             image = image_file,
+    --             widget = wibox.widget.imagebox
+    --         },
+    --         valign = "center",
+    --         halign = "center",
+    --         titled = false,
+    --         widget = wibox.container.tile
+    --     }
+    -- }
 end
 
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
+-- Re-set wallpaper when its requested
+screen.connect_signal("request::wallpaper", set_wallpaper)
 
 local volume = volume_widget()
 local battery = battery_widget()
@@ -259,10 +276,16 @@ globalkeys = gears.table.join( -- CUSTOM KEYS/START --
         group = "display",
     }),
     awful.key({ modkey }, "r", function()
-        awful.spawn(commands.rofi_run)
+        awful.spawn(commands.rofi_drun)
     end, {
-        description = "Rofi run ",
+        description = "Rofi drun",
         group = "launcher",
+    }),
+    awful.key({ modkey }, "e", function()
+        awful.spawn.easy_async_with_shell(commands.rofi_run, function(out) end)
+    end, {
+        description = "Rofi drun",
+        group = "launcher"
     }),
     awful.key({ modkey }, "w", function()
         awful.spawn(commands.rofi_window)

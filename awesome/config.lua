@@ -1,13 +1,18 @@
 -- This is used later as the default terminal and editor to run.
+local awful = require "awful"
+
 terminal = "kitty"
 editor = os.getenv("VISUAL") or os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 file_explorer = "pcmanfm"
+dotfiles = os.getenv "HOME" .. "/.dotfiles"
+
 commands = {
     brightness_up = "xbacklight -inc 5",
     brightness_down = "xbacklight -dec 5",
     -- rofi_run = "ulauncher-toggle",
-    rofi_run = "sh -c 'PATH=$PATH:$HOME/.local/bin:$HOME/.dotfiles/bin rofi -show run'",
+    rofi_run = "rofi -show run",
+    rofi_drun = "rofi -show drun",
     rofi_window = "rofi -show window",
     volume_up = "pactl set-sink-volume @DEFAULT_SINK@ +5%",
     volume_down = "pactl set-sink-volume @DEFAULT_SINK@ -5%",
