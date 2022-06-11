@@ -44,7 +44,7 @@ fi
 mkdir -p "$__config/systemd/user"
 if [ ! -f "$__config/systemd/user/auto-connection.service" ]; then
 	echo "Linking $__config/systemd/user/auto-connection.service";
-	ln -s "$DOTFILES/configuration/wifi/auto-connection.service" "$config/systemd/user/auto-connection.service"
+	ln -s "$DOTFILES/configuration/wifi/auto-connection.service" "$__config/systemd/user/auto-connection.service"
 	systemctl --user enable auto-connection.service
 fi
 

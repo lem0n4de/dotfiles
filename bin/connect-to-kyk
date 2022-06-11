@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 source "/home/lem0n/.dotfiles/configuration/wifi/credentials"
+nmcli c up GSBWIFI
+
 
 res=$(curl \
     -X POST \
