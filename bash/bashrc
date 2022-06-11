@@ -62,16 +62,6 @@ function countdown(){
    mpv ~/Music/Old-alarm-clock-sound.mp3
 }
 
-function set-wallpaper() {
-  if [[ -e "$1" ]]; then
-    cp "$1" "$HOME/Pictures/wallpapers/wall"
-    feh --bg-fill "$1"
-    echo "$SUCCESS_PREFIX Wallpaper set."
-  else
-    echo "$ERROR_PREFIX File does not exists."
-  fi
-}
-
 function get-window-class() {
   xprop | grep "WM_CLASS(STRING)"
 }
