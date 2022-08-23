@@ -3,8 +3,8 @@
 #
 
 #: {{{ Custom paths
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH:$HOME/dev/Android/Sdk/platform-tools:$HOME/dev/Android/Sdk/tools/bin:$HOME/.local/bin:$HOME/.dotfiles/bin:$HOME/.yarn/bin:$HOME/.local/share/gem/ruby/3.0.0/bin
 export DOTFILES=$HOME/.dotfiles
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.cargo/bin:$PATH:$HOME/dev/Android/Sdk/platform-tools:$HOME/dev/Android/Sdk/tools/bin:$HOME/.local/bin:$DOTFILES/bin:$HOME/.yarn/bin:$HOME/.local/share/gem/ruby/3.0.0/bin
 #: }}}
 
 #: {{{ KITTY_SHELL_INTEGRATION

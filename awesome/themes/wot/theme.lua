@@ -80,17 +80,18 @@ theme.top_left_border_width = dpi(2)
 local icons = gears.filesystem.get_configuration_dir() .. "icons"
 
 theme.taglist_total_shape = function(cr, width, height, radius)
-    gears.shape.rounded_rect(cr, width, height, 10)
+    gears.shape.rounded_rect(cr, width, height, 4)
 end
 theme.taglist_total_border_width = 2
-theme.taglist_total_border_color = WheelOfTime.BLUE
+theme.taglist_total_border_color = WheelOfTime.DARK_BLUE
 
 theme.taglist_bg = WheelOfTime.DARK1
-theme.taglist_fg_focus = WheelOfTime.BLUE
-theme.taglist_fg_normal = WheelOfTime.DARK_BLUE
-theme.taglist_fg_occupied = WheelOfTime.BROWN
-theme.taglist_bg_focus = WheelOfTime.DARK2
-theme.taglist_bg_urgent = WheelOfTime.ORANGE
+theme.taglist_fg_focus = WheelOfTime.DARK1
+theme.taglist_fg_normal = WheelOfTime.DARK_GRAY
+theme.taglist_fg_occupied = WheelOfTime.DARK_BLUE
+theme.taglist_fg_urgent = WheelOfTime.BLUE
+theme.taglist_bg_focus = WheelOfTime.DARK_BLUE
+theme.taglist_bg_urgent = WheelOfTime.DARK_YELLOW
 
 theme.taglist_squares_not_selected_color = WheelOfTime.WHITE
 
@@ -101,35 +102,38 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     theme.taglist_squares_not_selected_color
 )
 theme.taglist_shape = function(cr, w, h)
-    gears.shape.rounded_rect(cr, w, h, 5)
+    gears.shape.rounded_rect(cr, w, h, 4)
 end
 
 -- TASKLIST
 theme.tasklist_bg_and_border_colors = function()
     return tasklist_colors[math.random(#tasklist_colors)]
 end
+theme.tasklist_task_shape = function(cr, w, h)
+    gears.shape.rounded_rect(cr,w,h,5)
+end
 
 theme.wibar_shape = function(cr, w, h)
-    gears.shape.rounded_rect(cr, w, h, 50)
+    gears.shape.rounded_rect(cr, w, h, 5)
 end
 
 
 -- VOLUME
-theme.volume_bg_color = WheelOfTime.DARK_GREEN
+theme.volume_bg_color = WheelOfTime.GREEN
 theme.volume_bg_shape = function(cr, w, h)
-    gears.shape.rounded_rect(cr, w, h, 10)
+    gears.shape.rounded_rect(cr, w, h, 5)
 end
-theme.volume_bg_shape_border_color = WheelOfTime.GREEN
+theme.volume_bg_shape_border_color = WheelOfTime.DARK_GREEN
 theme.volume_bg_shape_border_width = 2
 
-theme.volume_fg_color = WheelOfTime.GREEN
+theme.volume_fg_color = WheelOfTime.DARK_GREEN
 
 
 -- BATTERY 
 theme.battery_fg_color = WheelOfTime.GRAY
 theme.battery_bg_color = WheelOfTime.DARK_GRAY
 theme.battery_bg_shape = function(cr, w, h)
-    gears.shape.rounded_rect(cr, w, h, 10)
+    gears.shape.rounded_rect(cr, w, h, 5)
 end
 theme.battery_bg_shape_border_color = WheelOfTime.GRAY
 theme.battery_bg_shape_border_width = 2
@@ -138,7 +142,7 @@ theme.battery_bg_shape_border_width = 2
 theme.textclock_fg_color = WheelOfTime.RED
 theme.textclock_bg_color = WheelOfTime.DARK_RED
 theme.textclock_bg_shape = function (cr, w, h)
-    gears.shape.rounded_rect(cr, w, h, 10)
+    gears.shape.rounded_rect(cr, w, h, 5)
 end
 theme.textclock_bg_shape_border_color = WheelOfTime.RED
 theme.textclock_bg_shape_border_width = 2

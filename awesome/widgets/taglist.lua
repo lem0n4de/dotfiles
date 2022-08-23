@@ -44,7 +44,7 @@ function factory(screen)
                     { id = "icon_role", widget = wibox.widget.imagebox },
                     top = 3,
                     bottom = 3,
-                    left = 10,
+		    left = 10,
                     right = 10,
                     id = "icon_margin_role",
                     widget = wibox.container.margin,
@@ -64,7 +64,7 @@ function factory(screen)
 
     taglist_container = rounded_rect_container {
         widget = mytaglist,
-        bg = beautiful.taglist_bg,
+        bg_color = beautiful.taglist_bg,
         bg_shape = beautiful.taglist_total_shape,
         bg_shape_border_color = beautiful.taglist_total_border_color,
         bg_shape_border_width = beautiful.taglist_total_border_width,

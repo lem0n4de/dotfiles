@@ -70,6 +70,7 @@ ruled.client.append_rules {
         rule_any = {
             class = {
                 "jetbrains-studio",
+		"jetbrains-pycharm",
                 "code",
                 "Code",
                 "emacs",
@@ -106,6 +107,7 @@ ruled.client.append_rules {
                 "Inkscape",
                 "anki",
                 "Anki",
+		"obsidian"
             },
         },
         properties = { tag = tags.tag6 },
@@ -123,6 +125,9 @@ ruled.client.append_rules {
                 "r5apex",
                 "rocketleague.exe"
             },
+	    name = {
+	        "Rocket League"
+	    }
         },
         properties = { tag = tags.tag7 },
     },

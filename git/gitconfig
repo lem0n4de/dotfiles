@@ -2,5 +2,11 @@
 	editor = vim
 	autocrlf = input
 [user]
-	name = Yunus Emre ÖRCÜN
+	name = lem0n4de
 	email = yunus.emre.orcun@outlook.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

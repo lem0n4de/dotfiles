@@ -136,7 +136,7 @@ local function factory(args)
     return rounded_rect_container {
         widget = widget,
         bg_color = bg_color,
-        bg_hape = bg_shape,
+        bg_shape = bg_shape,
         bg_shape_border_color = bg_shape_border_color,
         bg_shape_border_width = bg_shape_border_width,
     }

@@ -1,0 +1,3 @@
+- `free-proxy` https://github.com/jundymek/free-proxy #python
+- `libcurl-impersonate` https://github.com/lwthiker/curl-impersonate #cpp
+	- Curl patched to pretend like a browser

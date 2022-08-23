@@ -222,18 +222,15 @@ awful.screen.connect_for_each_screen(function(s)
         position = "top",
         screen = s,
         bg = beautiful.bg_normal .. "00",
+	margins = { top=5, right = 5, left=5, bottom=5 }
     }
 
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            {
-                s.mytaglist,
-                s.mypromptbox,
-                widget = wibox.container.margin,
-                left = 20,
-            },
+            s.mytaglist,
+            s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets

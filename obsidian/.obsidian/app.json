@@ -1,0 +1,8 @@
+{
+  "spellcheckLanguages": [
+    "en-GB",
+    "tr"
+  ],
+  "spellcheck": true,
+  "vimMode": true
+}
