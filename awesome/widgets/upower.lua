@@ -1,4 +1,3 @@
-local inspect = require "inspect"
 local dp = require "dbus_proxy"
 
 upower = {

@@ -2,14 +2,15 @@
 local awful = require "awful"
 
 terminal = "kitty"
+shell = "zsh"
 editor = os.getenv("VISUAL") or os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 file_explorer = "pcmanfm"
 dotfiles = os.getenv "HOME" .. "/.dotfiles"
 
 commands = {
-    brightness_up = "xbacklight -inc 5",
-    brightness_down = "xbacklight -dec 5",
+    brightness_up = "BACKLIGHT_INC",
+    brightness_down = "BACKLIGHT_DEC",
     -- rofi_run = "ulauncher-toggle",
     rofi_run = "rofi -show run",
     rofi_drun = "rofi -show drun",

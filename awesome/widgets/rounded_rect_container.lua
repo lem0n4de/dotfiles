@@ -1,6 +1,5 @@
 local wibox = require "wibox"
 local gears = require "gears"
-local i = require "inspect"
 
 local function factory(args)
     local args = args or {}

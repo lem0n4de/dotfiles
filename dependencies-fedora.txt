@@ -1,0 +1,1 @@
+zsh awesome feh picom network-manager-applet fzf

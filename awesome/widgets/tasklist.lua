@@ -4,7 +4,6 @@ local gears = require "gears"
 local beautiful = require "beautiful"
 local common = require "awful.widget.common"
 local rounded_rect_container = require "widgets.rounded_rect_container"
-local inspect = require "inspect"
 local base = require "wibox.widget.base"
 local dpi = require("beautiful").xresources.apply_dpi
 

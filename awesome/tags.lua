@@ -2,7 +2,6 @@ local awful = require "awful"
 local gears = require "gears"
 local wibox = require "wibox"
 local beautiful = require "beautiful"
-local inspect = require "inspect"
 
 local icons = beautiful.theme_path .. "/icons"
 
@@ -16,7 +15,7 @@ tags.tag1 = awful.tag.add("web", {
     -- icon = "",
     layout = awful.layout.suit.floating,
     screen = awful.screen.focused(),
-    single_instance = "brave",
+    single_instance = "firefox",
     icon = colored_icon "/wheel.png",
 })
 tags.tag2 = awful.tag.add("term", {
@@ -75,9 +74,9 @@ for k, _t in pairs(tags) do
             if type(_t.single_instance) == "string" then
                 local found = false
                 for index, c in ipairs(_t:clients()) do
-                    if string.match(c.instance, _t.single_instance) then
-                        found = true
-                    end
+    		    if string.find(c.instance, _t.single_instance) or (_t.single_instance:find("firefox") and c.instance:find("Navigator")) then
+		        found = true
+		    end
                 end
                 if not found then
                     awful.spawn.easy_async(_t.single_instance, function (out)

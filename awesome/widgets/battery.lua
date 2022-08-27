@@ -4,7 +4,6 @@ local naughty = require "naughty"
 local gears = require "gears"
 local beautiful = require "beautiful"
 local upower = require "widgets.upower"
-local i = require "inspect"
 local rounded_rect_container = require "widgets.rounded_rect_container"
 
 local function factory(args)

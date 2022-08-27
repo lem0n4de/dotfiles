@@ -1,0 +1,1 @@
+luarocks awesome cmake lua lua-lgi libxcb-devel lua-devel ImageMagick-devel xcb-util-xrm-devel xorg-x11-proto-devel libxdg-basedir-devel startup-notification-devel cairo-devel cairo-gobject-devel libxkbcommon-x11-devel xcb-util-wm-devel xcb-util-keysyms-devel xcb-util-cursor-devel gdk-pixbuf2-devel lua-ldoc dbus-devel gobject-introspection-devel light acpi

@@ -19,7 +19,6 @@ local hotkeys_popup = require "awful.hotkeys_popup"
 require "awful.hotkeys_popup.keys"
 local dpi = require("beautiful.xresources").apply_dpi
 
-local inspect = require "inspect"
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
